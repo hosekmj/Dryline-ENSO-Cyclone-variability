@@ -1,6 +1,4 @@
 #Create a 31-day centered 1940-2020 MSLP climatology at each analysis time (00z 06z 12z 18z)
-#gpd_plot in bigbang4
-
 
 import xarray as xr
 from multiprocessing import Pool
@@ -21,9 +19,8 @@ start = datetime.utcnow()
 
 #calculate the 31-day centered MSLP anomaly at each day/time from the cytrack MSLP files /raid/mhosek/cytrack/ERA5_data
 #the climo will be for each hour (e.g., the 31-day climo of 06z MSLP)
-#end of June won't be able to go the full forward window, but that should be fine
 
-ROOT = "/raid/mhosek/cytrack/ERA5_data"
+ROOT = "{YOUR_DATA_SOURCE_PATH}"
 VAR = 'msl'
 HOURS = [0,6,12,18]
 WINDOW = 31 #number of days in centered window
@@ -94,6 +91,6 @@ if __name__ == "__main__":
         )
 
     print(climo)
-    climo.to_netcdf("/raid/mhosek/cytrack/mslp_climo.nc")
+    climo.to_netcdf("{YOUR_OUTPUT_PATH}_mslp_climo.nc")
 
 print('Time to run: ' + str(datetime.utcnow() - start))
