@@ -1,5 +1,4 @@
 #create and run the GAM model and analysis
-#gpd_plot
 
 import pandas as pd
 from datetime import datetime, timedelta
@@ -77,9 +76,9 @@ domain_type = args.domain_type
 if domain_type == "None":
     domain_type = None
 
-directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}"
+directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}"
 if domain_type is not None:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
 os.makedirs(directory_path, exist_ok=True)
 
 starttime = datetime.utcnow()
@@ -133,14 +132,14 @@ enso_df = enso_df[['year', 'month', 'op_enso', '3mo_enso', '1mo_enso']]
 
 #read in cyclones
 if domain_type is not None:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/revision_1/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
 else:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}.pkl")
 #restrict to 00z
 cyclones_df = cyclones_df[cyclones_df['hour'] == 0]
 
 #read in drylines
-all_drylines = pd.read_pickle('/raid/student/mhosek/era5_drylines/pkl/dryline_envi_1940_2020.pkl')
+all_drylines = pd.read_pickle('{YOUR_FILE_PATH}/dryline_envi_1940_2020.pkl')
 spring_drylines = all_drylines[(all_drylines['month'] >= 2) & (all_drylines['month'] <= 6)].copy()
 
 #restrict all drylines to just the SGP (use median lat/lon to define whether it's "in" the SGP)
@@ -671,7 +670,7 @@ def run_gam(df, month=None):
     m.plot(lcx, lcy, color='darkgreen', linewidth=5, ax=ax, zorder=40)
 
     #read in the terrain map for masking
-    hght_array = xr.open_dataset("/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/ERA5_terrain_high.nc") #geopotential height
+    hght_array = xr.open_dataset("{YOUR_FILE_PATH}/ERA5_terrain_high.nc") #geopotential height
     eralons = hght_array.longitude.values
     eralats = hght_array.latitude.values
     #restrict the latitude and longitude
@@ -1099,7 +1098,7 @@ if plot_model ==  True:
         m.plot(lcx, lcy, color='darkgreen', linewidth=4, ax=ax, zorder=40)
     
         #read in the terrain map for masking
-        hght_array = xr.open_dataset("/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/ERA5_terrain_high.nc") #geopotential height
+        hght_array = xr.open_dataset("{YOUR_FILE_PATH}/ERA5_terrain_high.nc") #geopotential height
         eralons = hght_array.longitude.values
         eralats = hght_array.latitude.values
         #restrict the latitude and longitude
