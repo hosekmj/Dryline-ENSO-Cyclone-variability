@@ -1,5 +1,4 @@
 #Timeseries analysis of drylines, ENSO, and cyclone frequency
-#gpd_plot
 
 import os
 import pandas as pd
@@ -52,14 +51,14 @@ if domain_type != "no_buffer" and domain_type != "only_centroid":
     domain_type = None
 
 if domain_type is not None:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}/{domain_type}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}/{domain_type}"
 else:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}"
 os.makedirs(directory_path, exist_ok=True)
 
 
 #read in ENSO
-enso_xr = xr.open_dataset("/raid/mhosek/era5_drylines/ENSO_1940_2020_ONI.nc")
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/ENSO_1940_2020_ONI.nc")
 
 enso_df = enso_xr[
     ['ENSO_phase', 'oni_detrended', 'SSTa_detrended']
@@ -80,14 +79,14 @@ enso_df = enso_df[['year', 'month', 'op_enso', '3mo_enso', '1mo_enso']]
 
 #read in cyclones
 if domain_type is not None:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
 else:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}.pkl")
 #restrict to 00z
 cyclones_df = cyclones_df[cyclones_df['hour'] == 0]
 
 #read in drylines
-all_drylines = pd.read_pickle('/raid/student/mhosek/era5_drylines/pkl/dryline_envi_1940_2020.pkl') #only 00z
+all_drylines = pd.read_pickle('{YOUR_FILE_PATH}/dryline_envi_1940_2020.pkl') #only 00z
 spring_drylines = all_drylines[(all_drylines['month'] >= 2) & (all_drylines['month'] <= 6)].copy()
 
 #restrict all drylines to just the SGP (use median lat/lon to define whether it's "in" the SGP)
@@ -334,9 +333,9 @@ plt.subplots_adjust(wspace=0.065, hspace=0.15)
 plt.suptitle("Dryline Day Timeseries", y=0.93, fontsize=48)
 
 if domain_type is not None:
-    plt.savefig(f'/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}/{domain_type}/dryline_timeseries.png',dpi=100,bbox_inches='tight')
+    plt.savefig(f'{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}/{domain_type}/dryline_timeseries.png',dpi=100,bbox_inches='tight')
 else:
-    plt.savefig(f'/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}/dryline_timeseries.png',dpi=100,bbox_inches='tight')
+    plt.savefig(f'{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}/dryline_timeseries.png',dpi=100,bbox_inches='tight')
 
 
 #################################################################
@@ -460,9 +459,9 @@ plt.subplots_adjust(wspace=0.065, hspace=0.15)
 plt.suptitle("Southern Great Plains Cyclone Day Timeseries", y=0.93, fontsize=48)
 
 if domain_type is not None:
-    plt.savefig(f'/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}/{domain_type}/sgp_cyclone_timeseries_{figname}_{domain_type}.png',dpi=100,bbox_inches='tight')
+    plt.savefig(f'{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}/{domain_type}/sgp_cyclone_timeseries_{figname}_{domain_type}.png',dpi=100,bbox_inches='tight')
 else:
-    plt.savefig(f'/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}/sgp_cyclone_timeseries_{figname}.png',dpi=100,bbox_inches='tight')
+    plt.savefig(f'{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}/sgp_cyclone_timeseries_{figname}.png',dpi=100,bbox_inches='tight')
 
 
 #################################################################
@@ -529,7 +528,7 @@ ax1.legend(handles=handles, loc='upper right', fontsize=20)
 plt.subplots_adjust(wspace=0.065, hspace=0.2)
 plt.suptitle("ENSO Definition Timeseries", y=0.94, fontsize=48)
 
-plt.savefig(f'/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{enso_type}/enso_timeseries.png',dpi=100,bbox_inches='tight')
+plt.savefig(f'{YOUR_FILE_PATH}/{terrain_mask}/{enso_type}/enso_timeseries.png',dpi=100,bbox_inches='tight')
 
 
 print('Time to run: ' + str(datetime.utcnow() - starttime))
