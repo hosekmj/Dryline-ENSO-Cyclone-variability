@@ -1,5 +1,4 @@
 #create the dryline composite maps, updated for revision
-#gpd_plot
 
 import xarray as xr
 import pandas as pd
@@ -44,7 +43,7 @@ YEAR_CUTOFF = args.year_cutoff
 FDR = True
 print(f"FDR is set to {FDR}")
 
-directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}"
+directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}"
 os.makedirs(directory_path, exist_ok=True)
 
 llcrnrlat=28
