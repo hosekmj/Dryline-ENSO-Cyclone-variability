@@ -1,5 +1,4 @@
 #analysis as it related to SGP severe
-#gpd_plot
 
 #plots/tables to make (by month and phase unless otherwise stated):
     # % of dryline days that are associated with at least 1 SGP SVR (total, just cyclone-associated, just quiescent?)
@@ -100,9 +99,9 @@ if domain_type == "None":
     domain_type = None
 
 
-directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}"
+directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}"
 if domain_type is not None:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
 os.makedirs(directory_path, exist_ok=True)
 
 from netCDF4 import Dataset
@@ -110,13 +109,13 @@ starttime = datetime.utcnow()
 
 
 #read in SVR pickle with all the info we need
-svr_summary = pd.read_pickle("/home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/dryline_svr_summary.pkl")
+svr_summary = pd.read_pickle("{YOUR_FILE_PATH}/dryline_svr_summary.pkl")
 
 #read in cyclones
 if domain_type is not None:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
 else:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}.pkl")
 #restrict to 00z, 1995+
 cyclones_df = cyclones_df[cyclones_df['hour'] == 0]
 cyclones_df = cyclones_df[cyclones_df['year'] >= 1995]
