@@ -1,5 +1,4 @@
 #create the cyclone area composite maps, updated for revision
-#gpd_plot
 
 import xarray as xr
 import pandas as pd
@@ -77,17 +76,17 @@ if domain_type == "None":
     domain_type = None
 
 if domain_type is not None:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
 else:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}"
 os.makedirs(directory_path, exist_ok=True)
 
-era_path = "/raid/mhosek/cytrack/ERA5_data" #path to ERA5 files
+era_path = "{YOUR_FILE_PATH}" #path to ERA5 files
 
 if domain_type is not None:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_{terrain_mask}_{domain_type}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_{terrain_mask}_{domain_type}.pkl")
 else:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_{terrain_mask}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_{terrain_mask}.pkl")
 
 #keep only 00z times
 def keep_00z(row):
@@ -150,7 +149,7 @@ cyclones_df = cyclones_df.apply(remove_cutoff_years, axis=1)
 num_years = 2020-YEAR_CUTOFF+1 #how many years are in our sample
 
 #read in ENSO
-enso_xr = xr.open_dataset("/raid/mhosek/era5_drylines/ENSO_1940_2020_ONI.nc")
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/ENSO_1940_2020_ONI.nc")
 
 enso_df = enso_xr[
     ['ENSO_phase', 'oni_detrended', 'SSTa_detrended']
