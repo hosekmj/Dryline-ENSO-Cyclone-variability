@@ -1,5 +1,4 @@
 #Determine the ENSO phase for detrended SSTa using operational threshold (and indiv month)
-#gpd_plot, bigbang4
 
 import pandas as pd
 from datetime import datetime, timedelta
@@ -32,8 +31,7 @@ import xarray as xr
 from netCDF4 import Dataset
 starttime = datetime.utcnow()
 
-#enso_xr = xr.open_dataset("/raid/mhosek/era5_drylines/ENSO_1940_2022.nc") #this is area-average SSTa of 3.4 region, monthly
-enso_xr = xr.open_dataset("/home/michael.hosek/Documents/ERA5_drylines/enso.nc") #this is area-average SSTa of 3.4 region, monthly
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/enso.nc") #this is area-average SSTa of 3.4 region, monthly
 
 #restrict to 1939-2020
 enso_xr = enso_xr.sel(time=slice("1939-01-01", "2021-12-31"))
