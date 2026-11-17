@@ -1,5 +1,4 @@
 #Take the output from build_cyclone_database, and create a simplified output for easier statistics
-#gpd_plot
 
 import xarray as xr
 import pandas as pd
@@ -61,11 +60,11 @@ starttime = datetime.utcnow()
 
 # read in data
 if domain_type is not None:
-    all_cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_{terrain_mask}_{domain_type}.pkl")
+    all_cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_{terrain_mask}_{domain_type}.pkl")
 else:
-    all_cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_{terrain_mask}.pkl")
+    all_cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_{terrain_mask}.pkl")
 
-all_drylines = pd.read_pickle('/raid/student/mhosek/era5_drylines/pkl/dryline_envi_1940_2020.pkl')
+all_drylines = pd.read_pickle('{YOUR_FILE_PATH}/dryline_envi_1940_2020.pkl')
 spring_drylines = all_drylines[(all_drylines['month'] >= 2) & (all_drylines['month'] <= 6)].copy()
 #restrict all drylines to just the SGP (use median lat/lon to define whether it's "in" the SGP)
 sgp_n = 40
@@ -195,9 +194,9 @@ simple_df['sgp_cyclone_day'] = simple_df['sgp_cyclone'].apply(any)
 simple_df['lee_cyclone_day'] = simple_df['is_lee_cyclone'].apply(any)
 
 if domain_type is not None:
-    simple_df.to_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
+    simple_df.to_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
 else:
-    simple_df.to_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}.pkl")
+    simple_df.to_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}.pkl")
 
 
 print('Time to run: ' + str(datetime.utcnow() - starttime))
