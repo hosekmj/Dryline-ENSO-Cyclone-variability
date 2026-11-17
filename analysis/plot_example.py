@@ -1,5 +1,4 @@
 #make a 4-panel plot showing the front prediction and cyclone identification
-#gpd_plot, bigbang4
 
 import pandas as pd
 from datetime import datetime, timedelta
@@ -80,7 +79,7 @@ msmall = Basemap(projection='lcc', llcrnrlat=llcrnrlat, urcrnrlon=urcrnrlon,
 
 #pick out a good day
 
-all_drylines = pd.read_pickle('/raid/student/mhosek/era5_drylines/pkl/dryline_envi_1940_2020.pkl')
+all_drylines = pd.read_pickle('{YOUR_FILE_PATH}/dryline_envi_1940_2020.pkl')
 spring_drylines = all_drylines[(all_drylines['month'] >= 2) & (all_drylines['month'] <= 6)].copy()
 
 #restrict all drylines to just the SGP (use median lat/lon to define whether it's "in" the SGP)
@@ -103,7 +102,7 @@ testdate = datetime(1945, 5, 14, 0)
 analysis_time_str = testdate.strftime('%Y-%m-%d %H')
 
 #read in fronts
-fronts = xr.open_dataset(f'/raid/mhosek/era5_drylines/all_fronts_1940_2006.nc', engine='netcdf4')
+fronts = xr.open_dataset(f'YOUR_FILE_PATH/all_fronts_1940_2006.nc', engine='netcdf4')
 #restrict to the test date
 fronts = fronts.sel(time='1945-05-14T00:00:00')
 # fronts = fronts.sel(time='1945-06-01T00:00:00')
@@ -116,7 +115,7 @@ prob_occluded = fronts.prob_occluded_mask.values
 prob_stationary = fronts.prob_stationary_mask.values
 
 #read in cyclones; restrict to test date
-cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_t=1750.pkl")
+cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_t=1750.pkl")
 
 #keep only specific times (00z)
 def keep_time(row, testdate):
@@ -145,13 +144,11 @@ outermost_mslp = cyclones_df.iloc[1]['outermost_mslp'][0]
 
 
 ############################### read in ERA5 data
-era5_surface = xr.open_dataset(f'/raid/mhosek/era5_drylines/era5_data/ERA5_1940-2025_surface.nc')
-era5_plev = xr.open_dataset(f'/raid/mhosek/era5_drylines/era5_data/ERA5_upperair_1940_2020.nc')
-# era5_mslp = xr.open_dataset(f'/raid/mhosek/era5_drylines/era5_data/ERA5_1940-2025_mslp.nc')
+era5_surface = xr.open_dataset(f'{YOUR_FILE_PATH}/ERA5_1940-2025_surface.nc')
+era5_plev = xr.open_dataset(f'{YOUR_FILE_PATH}/ERA5_upperair_1940_2020.nc')
 
 #NOTE: MUST CHANGE IF CHANGE IN DATE
-era5_mslp = xr.open_dataset("/raid/mhosek/cytrack/ERA5_data/mod_uvmslp_ERA5_19450514_00.nc")
-# era5_mslp = xr.open_dataset("/raid/mhosek/cytrack/ERA5_data/mod_uvmslp_ERA5_19450324_00.nc")
+era5_mslp = xr.open_dataset("{YOUR_FILE_PATH}/mod_uvmslp_ERA5_19450514_00.nc")
 
 era5_surface = era5_surface.sel(time='1945-05-14T00:00:00')
 era5_plev = era5_plev.sel(time='1945-05-14T00:00:00')
