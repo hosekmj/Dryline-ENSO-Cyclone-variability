@@ -1,14 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 18 11:04:07 2025
-
-@author: michael.hosek
-"""
-
 #Plot the domain
-#bigbang4
-#gpd_plot
+
 
 import xarray as xr
 import pandas as pd
@@ -75,7 +66,7 @@ m = Basemap(projection='lcc', llcrnrlat=llcrnrlat, urcrnrlon=urcrnrlon,
             resolution='h', area_thresh=10000, fix_aspect=True)
 
 #%% read in the terrain map for masking
-hght_array = xr.open_dataset("/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/ERA5_terrain_high.nc") #geopotential height
+hght_array = xr.open_dataset("{YOUR_FILE_PATH}/ERA5_terrain_high.nc") #geopotential height
 eralons = hght_array.longitude.values
 eralats = hght_array.latitude.values
 #restrict the latitude and longitude
