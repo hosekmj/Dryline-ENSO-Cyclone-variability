@@ -1,9 +1,5 @@
 # script that will run the sensitivity analysis.
 
-#gpd_plot
-
-#can run from shell if I so choose
-
 import os
 import numpy as np
 import pandas as pd
@@ -56,33 +52,33 @@ def cytrack_terrain_sensitivity(terrain_mask, enso_type='op_enso'):
     #enso_type: str: 'op_enso', '3mo_enso', '1mo_enso
 
     
-    expected_pickle = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_t={terrain_mask}.pkl"
+    expected_pickle = f"{YOUR_FILE_PATH}/all_cyclones_simplified_t={terrain_mask}.pkl"
     if not os.path.exists(expected_pickle):
         print(f"Expected pickle not found for terrain mask {terrain_mask}, running preprocessing.")
     
         #build the cyclone database, if not already
-        cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/build_cyclone_database.py {terrain_mask}'
+        cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/build_cyclone_database.py {terrain_mask}'
         run_logged(cmd, "build_cyclone_database", terrain_mask, enso_type)
         # subprocess.run(cmd, shell=True, check=True)
 
         #simplify the cyclone database
-        cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/simplify_cyclone_database.py {terrain_mask}'
+        cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/simplify_cyclone_database.py {terrain_mask}'
         run_logged(cmd, "simplify_cyclone_database", terrain_mask, enso_type)
         # subprocess.run(cmd, shell=True, check=True)
 
     #cyclone heatmap
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/cyclone_summary_plots.py {terrain_mask}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/cyclone_summary_plots.py {terrain_mask}'
     run_logged(cmd, "cyclone_summary_plots", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
 
     #timeseries
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/timeseries.py {terrain_mask} {enso_type}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/timeseries.py {terrain_mask} {enso_type}'
     run_logged(cmd, "timeseries", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
     #summary_analysis
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/summary_analysis.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/summary_analysis.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "summary_analysis", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
@@ -97,18 +93,18 @@ def cytrack_terrain_sensitivity(terrain_mask, enso_type='op_enso'):
     else:
         raise ValueError(f"Unsupported ENSO type: {enso_type}")
     
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/svr_summary_analysis.py {terrain_mask} {enso_type_svr}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/svr_summary_analysis.py {terrain_mask} {enso_type_svr}'
     run_logged(cmd, "svr_summary_analysis", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
     #gam_model
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/gam_model.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/gam_model.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "gam_model", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
     
 
     #cyclone composite -- will need ENSO read_in too
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/cyclone_composite.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/cyclone_composite.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "cyclone_composite", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
@@ -122,12 +118,12 @@ def enso_sensitivity(enso_type='op_enso'):
     terrain_mask = 1750
 
     #timeseries
-    # cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/timeseries.py {terrain_mask} {enso_type}'
-    # run_logged(cmd, "timeseries", terrain_mask, enso_type)
-    # subprocess.run(cmd, shell=True, check=True)
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/timeseries.py {terrain_mask} {enso_type}'
+    run_logged(cmd, "timeseries", terrain_mask, enso_type)
+    subprocess.run(cmd, shell=True, check=True)
 
     #summary_analysis
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/summary_analysis.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/summary_analysis.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "summary_analysis", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
@@ -142,22 +138,22 @@ def enso_sensitivity(enso_type='op_enso'):
     else:
         raise ValueError(f"Unsupported ENSO type: {enso_type}")
     
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/svr_summary_analysis.py {terrain_mask} {enso_type_svr}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/svr_summary_analysis.py {terrain_mask} {enso_type_svr}'
     run_logged(cmd, "svr_summary_analysis", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
     #gam_model
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/gam_model.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/gam_model.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "gam_model", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
     #cyclone composite -- will need ENSO read_in too
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/cyclone_composite.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/cyclone_composite.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "cyclone_composite", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
     #dryline enso composite
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/dryline_composite.py {terrain_mask} {enso_type} 1940'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/dryline_composite.py {terrain_mask} {enso_type} 1940'
     run_logged(cmd, "dryline_composite", terrain_mask, enso_type)
     # subprocess.run(cmd, shell=True, check=True)
 
@@ -172,22 +168,22 @@ def year_sensitivity(enso_type='op_enso', terrain_mask=1750, year_cutoff=1979):
 
     
     #summary_analysis
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/summary_analysis.py {terrain_mask} {enso_type} {year_cutoff}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/summary_analysis.py {terrain_mask} {enso_type} {year_cutoff}'
     run_logged(cmd, "summary_analysis", terrain_mask, enso_type, year=year_cutoff)
     # subprocess.run(cmd, shell=True, check=True)
 
     #gam_model
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/gam_model.py {terrain_mask} {enso_type} {year_cutoff}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/gam_model.py {terrain_mask} {enso_type} {year_cutoff}'
     run_logged(cmd, "gam_model", terrain_mask, enso_type, year=year_cutoff)
     # subprocess.run(cmd, shell=True, check=True)
     
     #cyclone composite -- will need ENSO read_in too
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/cyclone_composite.py {terrain_mask} {enso_type} {year_cutoff}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/cyclone_composite.py {terrain_mask} {enso_type} {year_cutoff}'
     run_logged(cmd, "cyclone_composite", terrain_mask, enso_type, year=year_cutoff)
     # subprocess.run(cmd, shell=True, check=True)
 
     #dryline enso composite
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/dryline_composite.py {terrain_mask} {enso_type} {year_cutoff}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/dryline_composite.py {terrain_mask} {enso_type} {year_cutoff}'
     run_logged(cmd, "dryline_composite", terrain_mask, enso_type, year=year_cutoff)
     # subprocess.run(cmd, shell=True, check=True)
 
@@ -198,39 +194,39 @@ def domain_sensitivity(enso_type='op_enso', terrain_mask=1750, domain_type='no_b
     #enso_type: str: 'op_enso', '3mo_enso', '1mo_enso
 
     
-    expected_pickle = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_t={terrain_mask}_{domain_type}.pkl"
+    expected_pickle = f"{YOUR_FILE_PATH}/all_cyclones_simplified_t={terrain_mask}_{domain_type}.pkl"
     if not os.path.exists(expected_pickle):
         print(f"Expected pickle not found for terrain mask {domain_type}, running preprocessing.")
     
         #build the cyclone database, if not already
-        cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/build_cyclone_database.py {terrain_mask} {domain_type}'
+        cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/build_cyclone_database.py {terrain_mask} {domain_type}'
         run_logged(cmd, "build_cyclone_database", terrain_mask, enso_type, domain_type=domain_type)
         # subprocess.run(cmd, shell=True, check=True)
 
         #simplify the cyclone database
-        cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/simplify_cyclone_database.py {terrain_mask} {domain_type}'
+        cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/simplify_cyclone_database.py {terrain_mask} {domain_type}'
         run_logged(cmd, "simplify_cyclone_database", terrain_mask, enso_type, domain_type=domain_type)
         # subprocess.run(cmd, shell=True, check=True)
 
     #timeseries
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/timeseries.py {terrain_mask} {enso_type} {domain_type}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/timeseries.py {terrain_mask} {enso_type} {domain_type}'
     run_logged(cmd, "timeseries", terrain_mask, enso_type, domain_type=domain_type)
     # subprocess.run(cmd, shell=True, check=True)
 
     #summary_analysis
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/summary_analysis.py {terrain_mask} {enso_type} 1940 {domain_type}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/summary_analysis.py {terrain_mask} {enso_type} 1940 {domain_type}'
     run_logged(cmd, "summary_analysis", terrain_mask, enso_type, domain_type=domain_type)
     # subprocess.run(cmd, shell=True, check=True)
 
 
     #gam_model
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/gam_model.py {terrain_mask} {enso_type} 1940 {domain_type}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/gam_model.py {terrain_mask} {enso_type} 1940 {domain_type}'
     run_logged(cmd, "gam_model", terrain_mask, enso_type, domain_type=domain_type)
     # subprocess.run(cmd, shell=True, check=True)
     
     
     #cyclone composite -- will need ENSO read_in too
-    cmd = f'conda run -n gpd_plot python -W ignore /home/michael.hosek/Documents/ERA5_drylines/enso_paper/revision_1/cyclone_composite.py {terrain_mask} {enso_type} 1940 {domain_type}'
+    cmd = f'conda run -n gpd_plot python -W ignore {YOUR_FILE_PATH}/cyclone_composite.py {terrain_mask} {enso_type} 1940 {domain_type}'
     run_logged(cmd, "cyclone_composite", terrain_mask, enso_type, domain_type=domain_type)
     # subprocess.run(cmd, shell=True, check=True)
 
