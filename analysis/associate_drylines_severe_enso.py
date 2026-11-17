@@ -2,8 +2,6 @@
 #As in associate_dryline_severe.py, but for all drylines and also separate out ENSO phases
 # Take 80km gridded reports and warning, along with 80km gridded drylines
 # apply search box to all drylines and determine which SGP warnings/reports are associated with drylines and which aren't
-#run in bigbang4
-#use gpd_plot
 
 import geopandas
 import xarray as xr
@@ -62,9 +60,9 @@ m = Basemap(projection='lcc', llcrnrlat=llcrnrlat, urcrnrlon=urcrnrlon,
 
 
 #read in reports, warnings, and drylines
-reports = xr.load_dataset('/home/michael.hosek/Documents/ERA5_drylines/gridded_6hrly_severe_80km_1995_2020.nc') #I think xr.load will be better here than open
-warnings = xr.load_dataset('/home/michael.hosek/Documents/ERA5_drylines/gridded_6hrly_warnings_80km_1995_2020.nc')
-drylines = xr.open_dataset('/raid/student/mhosek/era5_drylines/gridded_drylines_80km_1995_2020.nc')
+reports = xr.load_dataset('{YOUR_FILE_PATH}/gridded_6hrly_severe_80km_1995_2020.nc') #I think xr.load will be better here than open
+warnings = xr.load_dataset('{YOUR_FILE_PATH}/gridded_6hrly_warnings_80km_1995_2020.nc')
+drylines = xr.open_dataset('{YOUR_FILE_PATH}/gridded_drylines_80km_1995_2020.nc')
 
 
 # restrict to spring (Feb -- May); restrict warnings/reports to 21z (21z-03z)
@@ -94,7 +92,7 @@ dryline_times = drylines.time.values
 lons, lats = drylines.lons.values, drylines.lats.values
 
 #read in monthly enso values
-enso_xr = xr.open_dataset("/raid/student/mhosek/era5_drylines/ENSO_1940_2022.nc")
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/ENSO_1940_2022.nc")
 times = enso_xr.time.values
 keeptimes = []
 for i in range(len(times)):
@@ -486,7 +484,7 @@ xdf = xr.Dataset(data_vars={'tornado_el':(['time','lat','lon'],dryline_associate
 print(xdf)
 
 
-xdf.to_netcdf('/raid/student/mhosek/era5_drylines/dryline_associated_severe_1995_2020_byenso.nc')
+xdf.to_netcdf('{YOUR_FILE_PATH}/dryline_associated_severe_1995_2020_byenso.nc')
 
 
 #%%
