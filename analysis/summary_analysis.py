@@ -1,6 +1,4 @@
 #create some dryline-ENSO analysis plots and statistics for tables
-#gpd_plot
-
 
 from numpy.linalg.linalg import norm
 import os
@@ -85,9 +83,9 @@ domain_type = args.domain_type
 if domain_type == "None":
     domain_type = None
 
-directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}"
+directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}"
 if domain_type is not None:
-    directory_path = f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
+    directory_path = f"{YOUR_FILE_PATH}/{terrain_mask}/{ENSO_TYPE}/{domain_type}"
 os.makedirs(directory_path, exist_ok=True)
 
 llcrnrlat=25 #20
@@ -136,9 +134,9 @@ enso_df = enso_df[['year', 'month', 'op_enso', '3mo_enso', '1mo_enso']]
 
 #read in cyclones
 if domain_type is not None:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}_{domain_type}.pkl")
 else:
-    cyclones_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_simplified_{terrain_mask}.pkl")
+    cyclones_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_simplified_{terrain_mask}.pkl")
 #restrict to 00z
 cyclones_df = cyclones_df[cyclones_df['hour'] == 0]
 
@@ -1416,9 +1414,9 @@ def cliffs_delta(x, y):
 
 # total number of lee cyclones by month and ENSO phase (by initiated date)
 if domain_type is not None:
-    complex_cyclone_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_{terrain_mask}_{domain_type}.pkl")
+    complex_cyclone_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_{terrain_mask}_{domain_type}.pkl")
 else:
-    complex_cyclone_df = pd.read_pickle(f"/home/michael.hosek/Documents/ERA5_drylines/enso_paper/CyTRACK/revision_1/all_cyclones_df_{terrain_mask}.pkl")
+    complex_cyclone_df = pd.read_pickle(f"{YOUR_FILE_PATH}/all_cyclones_df_{terrain_mask}.pkl")
 lee_cyclones = complex_cyclone_df[complex_cyclone_df['is_lee_cyclone'] == True]
 
 lee_init_time = []
