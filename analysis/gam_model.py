@@ -111,7 +111,7 @@ to_meters = Transformer.from_crs(
 ########################### read in data
 
 #read in ENSO
-enso_xr = xr.open_dataset("/raid/mhosek/era5_drylines/ENSO_1940_2020_ONI.nc")
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/ENSO_1940_2020_ONI.nc")
 
 enso_df = enso_xr[
     ['ENSO_phase', 'oni_detrended', 'SSTa_detrended']
