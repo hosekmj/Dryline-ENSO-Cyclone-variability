@@ -157,6 +157,6 @@ enso_xr.attrs['SSTa_detrended'] = "deg C; linearly detrended SSTa across years"
 enso_xr.attrs['oni_detrended'] = "deg C; centered 3-month avg detrended SSTa"
 enso_xr.attrs['ENSO_phase'] = "ENSO phase classification (5-consecutive months +/-0.5 ONI): 1 = El Nino, -1 = La Nina, 0 = Neutral"
 
-enso_xr.to_netcdf("/raid/mhosek/era5_drylines/ENSO_1940_2020_ONI.nc")
+enso_xr.to_netcdf("{YOUR_FILE_PATH}/ENSO_1940_2020_ONI.nc")
 
 print('Time to run: ' + str(datetime.utcnow() - starttime))
