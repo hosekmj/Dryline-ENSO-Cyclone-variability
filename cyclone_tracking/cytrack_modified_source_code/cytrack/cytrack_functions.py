@@ -1926,7 +1926,7 @@ def get_mslp_climo(idir="./",
 	fulldate = datetime(1945, int(month), int(day)) #random year because that's format of climo doc
 
 	#read in the climo file
-	with xr.open_dataset("/raid/mhosek/cytrack/mslp_climo.nc") as climo:
+	with xr.open_dataset("{YOUR_FILE_PATH}/mslp_climo.nc") as climo:
 
 		#select the hour and day
 		climo = climo.sel(hour=int(hour))
