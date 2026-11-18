@@ -113,7 +113,7 @@ to_meters = Transformer.from_crs(
 lee_domain = transform(to_meters, box(west, south, east, north))
 
 #read in ENSO
-enso_xr = xr.open_dataset("/raid/mhosek/era5_drylines/ENSO_1940_2020_ONI.nc")
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/ENSO_1940_2020_ONI.nc")
 
 enso_df = enso_xr[
     ['ENSO_phase', 'oni_detrended', 'SSTa_detrended']
@@ -141,7 +141,7 @@ else:
 cyclones_df = cyclones_df[cyclones_df['hour'] == 0]
 
 #read in drylines
-all_drylines = pd.read_pickle('/raid/student/mhosek/era5_drylines/pkl/dryline_envi_1940_2020.pkl')
+all_drylines = pd.read_pickle('{YOUR_FILE_PATH}/dryline_envi_1940_2020.pkl')
 spring_drylines = all_drylines[(all_drylines['month'] >= 2) & (all_drylines['month'] <= 6)].copy()
 
 #restrict all drylines to just the SGP (use median lat/lon to define whether it's "in" the SGP)
