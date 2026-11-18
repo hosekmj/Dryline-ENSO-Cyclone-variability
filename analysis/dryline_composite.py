@@ -59,7 +59,7 @@ m = Basemap(projection='lcc', llcrnrlat=llcrnrlat, urcrnrlon=urcrnrlon,
             lat_1=latin1, lat_2=latin2, lat_0=lat_0, lon_0=lon_0,
             resolution='h', area_thresh=10000, fix_aspect=True)
 
-dryline_xary = xr.open_dataset('/raid/mhosek/era5_drylines/dryline_cat_1940_2025_corrected.nc') #for reading in uncompressed datasets
+dryline_xary = xr.open_dataset('{YOUR_FILE_PATH}/dryline_cat_1940_2025_corrected.nc') #for reading in uncompressed datasets
   
 #restrict to spring, 00z, only up to 2020
 times = dryline_xary.time.values
@@ -76,7 +76,7 @@ dryline_xary = dryline_xary.sel(time=dryline_xary['time.year'] >= YEAR_CUTOFF)
 num_years = 2020-YEAR_CUTOFF+1 #how many years are in our sample
 
 #read in ENSO
-enso_xr = xr.open_dataset("/raid/mhosek/era5_drylines/ENSO_1940_2020_ONI.nc")
+enso_xr = xr.open_dataset("{YOUR_FILE_PATH}/ENSO_1940_2020_ONI.nc")
 
 enso_df = enso_xr[
     ['ENSO_phase', 'oni_detrended', 'SSTa_detrended']
